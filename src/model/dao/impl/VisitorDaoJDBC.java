@@ -39,7 +39,7 @@ private Connection conn;
 			st.setString(1, obj.getName());
 			st.setInt(2, obj.getHoraEntrada());
 			st.setInt(3, obj.getHoraSaida());
-			st.setString(4, obj.getDweller().getName());
+			st.setInt(4, obj.getDweller().getId());
 			
 			int rowsAffected = st.executeUpdate();
 			
@@ -70,13 +70,13 @@ private Connection conn;
 		try {
 			st= conn.prepareStatement(
 					"UPDATE visitor "
-					+"SET Name = ?, HoraEntrada = ?, HoraSaida = ?, DwellerName = ? "
-					+"WHERE Id = ? "
+					+"SET Nome = ?, HoraEntrada = ?, HoraSaida = ?, DwellerId = ? "
+					+"WHERE Codigo = ? "
 					);
 			st.setString(1, obj.getName());
 			st.setInt(2, obj.getHoraEntrada());
 			st.setInt(3, obj.getHoraSaida());
-			st.setString(4, obj.getDweller().getName());
+			st.setInt(4, obj.getDweller().getId());
 			st.setInt(5, obj.getId());
 			
 			st.executeUpdate();
@@ -95,7 +95,7 @@ private Connection conn;
 		PreparedStatement st = null;
 		try {
 			st = conn.prepareStatement(
-					"DELETE FROM visitor WHERE Id = ? "
+					"DELETE FROM visitor WHERE Codigo = ? "
 					);
 			st.setInt(1, id);
 			
@@ -115,10 +115,7 @@ private Connection conn;
 		ResultSet rs = null;
 		try {
 			st = conn.prepareStatement(
-					"SELECT visitor.*,Name as DweName "
-					+"FROM visitor INNER JOIN dweller "
-					+"ON visitor.DwellerId = dweller.Id "
-					+"WHERE visitor.Id = ? "
+					"SELECT * FROM visitor WHERE codigo = ? "
 					);
 			st.setInt(1, id);
 			rs = st.executeQuery();
@@ -140,7 +137,7 @@ private Connection conn;
 
 	private Visitor instantiateVisitor(ResultSet rs, Dweller dwe) throws SQLException {
 		Visitor obj = new Visitor();
-		obj.setId(rs.getInt("Id"));
+		obj.setId(rs.getInt("Codigo"));
 		obj.setName(rs.getString("Nome"));
 		obj.setHoraEntrada(rs.getInt("HoraEntrada"));
 		obj.setHoraSaida(rs.getInt("HoraSaida"));
@@ -151,7 +148,6 @@ private Connection conn;
 	private Dweller instantiateDweller(ResultSet rs) throws SQLException {
 		Dweller dwe = new Dweller();
 		dwe.setId(rs.getInt("DwellerId"));
-		dwe.setName(rs.getString("DwellerName"));
 		return dwe;
 	}
 
@@ -161,10 +157,7 @@ private Connection conn;
 		ResultSet rs = null;
 		try {
 			st = conn.prepareStatement(
-					"SELECT visitor.*,dweller.Name as DwellerName "
-					+"FROM visitor INNER JOIN dweller "
-					+"ON visitor.DwellerId = dweller.Id "
-					+"ORDER BY Name "
+					"SELECT*FROM visitor "
 					);
 			
 			rs = st.executeQuery();
