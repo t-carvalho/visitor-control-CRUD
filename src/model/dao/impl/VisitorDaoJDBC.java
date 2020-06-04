@@ -31,14 +31,14 @@ private Connection conn;
 		try {
 			st= conn.prepareStatement(
 					"INSERT INTO visitor "
-					+"(Name, HoraEntrada, HoraSaida, DwellerName) "
+					+"(Nome, HoraEntrada, HoraSaida, DwellerId) "
 					+"VALUES "
 					+"(?, ?, ?, ?) ",
 					Statement.RETURN_GENERATED_KEYS
 					);
 			st.setString(1, obj.getName());
-			st.setDate(2, new java.sql.Date(obj.getHoraEntrada().getHours()));
-			st.setDate(3, new java.sql.Date(obj.getHoraSaida().getHours()));
+			st.setInt(2, obj.getHoraEntrada());
+			st.setInt(3, obj.getHoraSaida());
 			st.setString(4, obj.getDweller().getName());
 			
 			int rowsAffected = st.executeUpdate();
@@ -74,8 +74,8 @@ private Connection conn;
 					+"WHERE Id = ? "
 					);
 			st.setString(1, obj.getName());
-			st.setDate(2, new java.sql.Date(obj.getHoraEntrada().getHours()));
-			st.setDate(3, new java.sql.Date(obj.getHoraSaida().getHours()));
+			st.setInt(2, obj.getHoraEntrada());
+			st.setInt(3, obj.getHoraSaida());
 			st.setString(4, obj.getDweller().getName());
 			st.setInt(5, obj.getId());
 			
@@ -115,10 +115,10 @@ private Connection conn;
 		ResultSet rs = null;
 		try {
 			st = conn.prepareStatement(
-					"SELECT seller.*,department.Name as DepName "
-					+"FROM seller INNER JOIN department "
-					+"ON seller.DepartmentId = department.Id "
-					+"WHERE seller.Id = ? "
+					"SELECT visitor.*,Name as DweName "
+					+"FROM visitor INNER JOIN dweller "
+					+"ON visitor.DwellerId = dweller.Id "
+					+"WHERE visitor.Id = ? "
 					);
 			st.setInt(1, id);
 			rs = st.executeQuery();
@@ -141,9 +141,9 @@ private Connection conn;
 	private Visitor instantiateVisitor(ResultSet rs, Dweller dwe) throws SQLException {
 		Visitor obj = new Visitor();
 		obj.setId(rs.getInt("Id"));
-		obj.setName(rs.getString("Name"));
-		obj.setHoraEntrada(rs.getDate("HoraEntrada"));
-		obj.setHoraSaida(rs.getDate("HoraSaida"));
+		obj.setName(rs.getString("Nome"));
+		obj.setHoraEntrada(rs.getInt("HoraEntrada"));
+		obj.setHoraSaida(rs.getInt("HoraSaida"));
 		obj.setDweller(dwe);
 		return obj;
 	}

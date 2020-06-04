@@ -8,15 +8,15 @@ public class Visitor implements Serializable {
 	
 	private Integer id;
 	private String name;
-	private Date horaEntrada;
-	private Date horaSaida;
+	private Integer horaEntrada;
+	private Integer horaSaida;
 	private Dweller dweller;
 	
 	public Visitor() {
 		
 	}
 	
-	public Visitor(Integer id, String name, Date horaEntrada, Date horaSaida, Dweller dweller) {
+	public Visitor(Integer id, String name, Integer horaEntrada, Integer horaSaida, Dweller dweller) {
 		this.id = id;
 		this.name = name;
 		this.horaEntrada = horaEntrada;
@@ -40,19 +40,19 @@ public class Visitor implements Serializable {
 		this.name = name;
 	}
 
-	public Date getHoraEntrada() {
+	public Integer getHoraEntrada() {
 		return horaEntrada;
 	}
 
-	public void setHoraEntrada(Date horaEntrada) {
+	public void setHoraEntrada(Integer horaEntrada) {
 		this.horaEntrada = horaEntrada;
 	}
 
-	public Date getHoraSaida() {
+	public Integer getHoraSaida() {
 		return horaSaida;
 	}
 
-	public void setHoraSaida(Date horaSaida) {
+	public void setHoraSaida(Integer horaSaida) {
 		this.horaSaida = horaSaida;
 	}
 	
