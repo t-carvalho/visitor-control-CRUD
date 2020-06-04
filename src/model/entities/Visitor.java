@@ -10,16 +10,18 @@ public class Visitor implements Serializable {
 	private String name;
 	private Date horaEntrada;
 	private Date horaSaida;
+	private Dweller dweller;
 	
 	public Visitor() {
 		
 	}
 	
-	public Visitor(Integer id, String name, Date horaEntrada, Date horaSaida) {
+	public Visitor(Integer id, String name, Date horaEntrada, Date horaSaida, Dweller dweller) {
 		this.id = id;
 		this.name = name;
 		this.horaEntrada = horaEntrada;
 		this.horaSaida = horaSaida;
+		this.dweller = dweller;
 	}
 
 	public Integer getId() {
@@ -52,6 +54,14 @@ public class Visitor implements Serializable {
 
 	public void setHoraSaida(Date horaSaida) {
 		this.horaSaida = horaSaida;
+	}
+	
+	public Dweller getDweller() {
+		return dweller;
+	}
+
+	public void setDweller(Dweller dweller) {
+		this.dweller = dweller;
 	}
 
 	@Override
@@ -100,8 +110,11 @@ public class Visitor implements Serializable {
 	@Override
 	public String toString() {
 		return "Visitor [id=" + id + ", name=" + name + ", horaEntrada=" + horaEntrada + ", horaSaida=" + horaSaida
-				+ "]";
+				+ ", dwller= "+ dweller+"]";
 	}
+
+	
+
 	
 	
 	
